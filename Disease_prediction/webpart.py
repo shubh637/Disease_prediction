@@ -1,7 +1,6 @@
 import base64
 from io import BytesIO
 import pickle
-from tkinter import Image
 from sklearn.preprocessing import StandardScaler
 import requests
 import pandas as pd
