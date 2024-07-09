@@ -9,3 +9,6 @@ CSS Styling: Styled with CSS to enhance user experience and interface design.
 Frontend: HTML, JavaScript, CSS
 Backend: Python (for machine learning models)
 Frameworks/Libraries: TensorFlow/Keras (for deep learning models), Flask (for backend API if applicable)
+
+
+here is the link:https://diseaseprediction-rzjuyyucpc4ucyprpxgrjc.streamlit.app/
