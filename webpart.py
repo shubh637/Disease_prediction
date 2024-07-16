@@ -83,7 +83,7 @@ background-size: cover;
 background-repeat: no-repeat;
 background-attachment: fixed;
 }}
-[id="disease-prediction-system"],[id="pneumonia-detection-from-chest-x-ray-images"],[id="test-history"],[id="login"],[id="sign-up"][id="diabetes-prediction-using-ml"],[id="disease-prediction"],.st-emotion-cache-1wmy9hl e1f1d6gn1,.st-emotion-cache-vut4ln e1f1d6gn2{{
+[id="disease-prediction-system"],[id="test-history"],[id="login"],[id="sign-up"][id="diabetes-prediction-using-ml"],[id="disease-prediction"],.st-emotion-cache-1wmy9hl e1f1d6gn1,.st-emotion-cache-vut4ln e1f1d6gn2{{
     background:rgb(2,0,36);
     color:white;
     width:100%
