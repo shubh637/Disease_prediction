@@ -65,7 +65,7 @@ medical_history=get_image_as_base64("./images/medical_his.png")
 page_bg_img = f"""
 <style>
 [data-testid="stAppViewContainer"] {{
-background: linear-gradient(325deg,#acb6e5 0%,#86fde8 68%,#9796f0 98%);
+background: linear-gradient(325deg,#2C67F2 0%,#86fde8 68%,#9796f0 98%);
 background-size: 180% 180%;
 animation: gradient-animation 12s ease infinite;
 }}
