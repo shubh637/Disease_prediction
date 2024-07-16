@@ -67,7 +67,7 @@ page_bg_img = f"""
 [data-testid="stAppViewContainer"] {{
 background: linear-gradient(325deg,#acb6e5 0%,#86fde8 68%,#9796f0 98%);
 background-size: 180% 180%;
-animation: gradient-animation 18s ease infinite;
+animation: gradient-animation 12s ease infinite;
 }}
 [data-testid="stHeader"]{{
 background:rgb(2,0,36);
