@@ -83,7 +83,7 @@ background-size: cover;
 background-repeat: no-repeat;
 background-attachment: fixed;
 }}
-[id="disease-prediction-system"],[id="test-history"],[id="login"],[id="sign-up"],[id="diabetes-prediction-using-ml"],[id="disease-prediction"]{{
+[id="disease-prediction-system"],[id="appointment-form"],[id="doctor-information:"],[id="test-history"],[id="login"],[id="sign-up"],[id="diabetes-prediction-using-ml"],[id="disease-prediction"]{{
     background:rgb(2,0,36);
     color:white;
     width:100%
