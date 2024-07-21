@@ -29,7 +29,5 @@ scipy==1.13.0
 # Additional packages
 datetime==5.0
 
-# For Lottie animations (used by streamlit-lottie)
-# You might need to add the dependencies for streamlit-lottie manually if required
-
-# For tkinter (note: tkinter is part of the Python standard library)
+# Dotenv for loading environment variables
+python-dotenv==1.0.0
