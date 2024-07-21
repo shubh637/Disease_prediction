@@ -19,6 +19,9 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import wikipedia 
 import streamlit.components.v1 as components
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
 
