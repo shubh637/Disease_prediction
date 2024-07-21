@@ -632,7 +632,7 @@ def diabetes_result_page():
         if formbtn or st.session_state.formbtn_state:
             st.session_state.formbtn_state = True
             form_function("Diabetes")
-            st.session_state.formbtn_state = False  
+           
     else:
         st.success("The person is not likely to have diabetes.")
         components.html(no_disease_image, height=400)
@@ -656,7 +656,7 @@ def heart_result_page():
         if formbtn or st.session_state.formbtn_state:
             st.session_state.formbtn_state = True
             form_function("Heart disease")
-            st.session_state.formbtn_state = False 
+           
     else:
         st.success("The person is not likely to have heart disease.")
         components.html(no_disease_image,height=400)
@@ -679,7 +679,7 @@ def framingham_result_page():
         if formbtn or st.session_state.formbtn_state:
             st.session_state.formbtn_state = True
             form_function("Heart disease")
-            st.session_state.formbtn_state = False 
+           
     else:
         st.success("The person is not likely to have Cardiovascular Disease.")
         
