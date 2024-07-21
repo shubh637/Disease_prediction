@@ -1,4 +1,5 @@
 #Why It’s a Good Choice:
+
 #Relevance and Impact: Health care and medical diagnosis are critical areas where technology can make a significant difference. A disease prediction system can potentially help in early diagnosis and better patient management.
 
 #Involves Advanced Techniques: Implementing this project would require knowledge of advanced ML and DL techniques, which are highly relevant in today's tech landscape. It provides an opportunity to work with algorithms like neural networks, decision trees, and ensemble methods.
