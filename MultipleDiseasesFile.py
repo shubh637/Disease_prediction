@@ -13,6 +13,7 @@ import json
 import sqlite3
 import bcrypt
 import secrets
+import time as delay
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
@@ -138,6 +139,7 @@ diabetics_model=pickle.load(open("./models/diabeticdisease_model.sav","rb"))
 heart_model=pickle.load(open("./models/heart_model.sav","rb"))
 framingham_model=pickle.load(open("./models/framingham.sav","rb"))
 any_model = pickle.load(open("./models/any_model.sav","rb"))
+doctor_df = pd.read_csv('./data and predictions/doctors.csv') 
 
 
 # Login page
@@ -235,50 +237,31 @@ def start():
         st.rerun() 
 
 
-## Function to fetch doctor information from Wikipedia
+# Function to get doctor information based on disease
 def get_doctor_info(disease):
     try:
-        # Limit the length of the search query
-        query = f"doctor specializing in {disease[:100]}"
-        
-        # Search for doctors specializing in the given disease
-        search_results = wikipedia.search(query)
-        
-        # Fetch the first result page
-        if search_results:
-            wiki_page = wikipedia.page(search_results[0])
-            summary = wiki_page.summary
-            url = wiki_page.url
-            
-            # Extract relevant information from the summary (if needed)
-            # For example, parse the summary to get doctor's name, specialty, contact details, etc.
-            # This part depends on the structure of Wikipedia pages and what information is available.
-            
-            # For demonstration, let's create a simple form format
-            doctor_info = {
-                "Name": "John Doe",
-                "Specialty": "Cardiology",
-                "Contact": "123-456-7890",
-                "Location": "New York, USA",
-                "Bio": summary[:500],  # Limit bio to 500 characters
-                "Wikipedia Link": url
-            }
-            
-            return doctor_info
+        doctors = doctor_df[doctor_df['Disease'] == disease]
+        if not doctors.empty:
+            return doctors.to_dict('records')[0]  # Return the first matching doctor as a dictionary
         else:
-            return None
-    except wikipedia.DisambiguationError as e:
-        return {
-            "error": "Multiple results found. Please be more specific."
-        }
-    except wikipedia.PageError:
-        return {
-            "error": "No information found."
-        }
+            return {"error": "No doctors found for this disease"}
     except Exception as e:
-        return {
-            "error": f"An error occurred: {str(e)}"
-        }
+        return {"error": str(e)}
+def save_appointment_to_csv(data, csv_file):
+    # Convert the data dictionary to a DataFrame with one row
+    new_data = pd.DataFrame([data])
+    
+    try:
+        # Read the existing CSV file
+        df = pd.read_csv(csv_file)
+        # Append the new data to the existing DataFrame
+        df = pd.concat([df, new_data], ignore_index=True)
+    except FileNotFoundError:
+        # If the file does not exist, create a new DataFrame from the new data
+        df = new_data
+    
+    # Save the updated DataFrame to the CSV file
+    df.to_csv(csv_file, index=False)
 def any_disease():
     
     # Define symptoms and diseases
@@ -332,8 +315,15 @@ def any_disease():
             additional_symptoms = [sym.strip() for sym in additional_symptoms.split(",")]
             selected_symptoms.extend(additional_symptoms)
 
-    # Predict disease on button click
-    if st.button("Predict Disease"):
+   # Predict disease on button click
+   
+    formbtn = st.button("Predict Disease")
+
+    if "formbtn_state" not in st.session_state:
+         st.session_state.formbtn_state = False
+
+    if formbtn or st.session_state.formbtn_state:
+        st.session_state.formbtn_state = True
         # Initialize l2 to represent symptom presence
         l2 = [0] * len(l1)
         for k in range(len(l1)):
@@ -371,30 +361,77 @@ def any_disease():
                 st.warning(f"More than one '{h}' found. Please be more specific.")
             except wikipedia.PageError as e:
                 st.warning(f"No information found for '{h}' on Wikipedia.") 
-    # Button to fetch doctor information
-    if st.button("Get Doctor Info"):
-        # Initialize l2 to represent symptom presence
-        l2 = [0] * len(l1)
-        for k in range(len(l1)):
-            if l1[k] in selected_symptoms:
-                l2[k] = 1
+        # Fetch doctor information
+        form_function(h)
+        
 
-        # Make prediction
-        inputtest = [l2]
-        predicted = any_model.predict(inputtest)[0]
-
-        # Find predicted disease
-        h = 'Not Found'
-        for a in range(len(disease)):
-            if predicted == a:
-                h = disease[a]
-                break
-        disease = h
+def form_function(disease):
+        default_photo_url = "https://via.placeholder.com/50"  # URL of the default image
+        csv_file="./data and predictions/paitent_appointments.csv"
         doctor_info = get_doctor_info(disease)
+
         if doctor_info and "error" not in doctor_info:
-            for key, value in doctor_info.items():
-                st.write(f"**{key}:** {value}")
-        else:
+            
+        
+        # Display appointment form
+            st.title("Appointment Form")
+            with st.form(key='appointment_form'):
+                st.subheader("Doctor Information:")
+                col1,col2=st.columns(2)
+           
+                photo_url = doctor_info.get("Photo", default_photo_url)
+                with col2:
+                    if not photo_url:
+                        photo_url = default_photo_url
+        
+                    st.image(photo_url, caption=f"Dr. {doctor_info['Doctor Name']}", width=300)  # Adjust width for smaller image
+                with col1:
+                    for key, value in doctor_info.items():
+                        if key != "Photo_url":  # Skip the photo key while displaying other information
+                            st.write(f"**{key}:** {value}")
+                st.subheader("Make an Appointment:")
+                name = st.text_input("Your Name", key="name")
+                contact = st.text_input("Your Contact", key="contact")
+                email = st.text_input("Your Email", key="email")
+                date = st.date_input("Preferred Appointment Date", key="date")
+                time = st.time_input("Preferred Appointment Time", key="time")
+                col1,col2=st.columns(2)
+                with col1:    
+                    submit_button = st.form_submit_button(label='Submit')
+                with col2:    
+                    close_button = st.form_submit_button(label='Close')
+                if close_button:
+                    st.success(f"Closing the Form")
+                    delay.sleep(2)
+                    st.session_state.formbtn_state = False                           
+                    st.rerun()
+                if submit_button:
+                        if name and contact and email:    
+                            
+                            appointment_data = {
+                                "Disease": disease,
+                                "Doctor Name": doctor_info["Doctor Name"],
+                                "Specialization": doctor_info["Specialization"],
+                                "Contact": doctor_info["Contact"],
+                                "Address": doctor_info["Address"],
+                                "Email": doctor_info["Email"],
+                                "Patient Name": name,
+                                "Patient Contact": contact,
+                                "Patient Email": email,
+                                "Appointment Date": date.strftime("%Y-%m-%d"),
+                                "Appointment Time": time.strftime("%H:%M:%S")
+                            }
+                            save_appointment_to_csv(appointment_data, csv_file)
+                            st.success(f"Appointment requested for {name} with Dr. {doctor_info['Doctor Name']} on {date} at {time}.")
+                            delay.sleep(2)
+                            st.session_state.formbtn_state = False                           
+                            st.rerun()
+                            
+                           
+                        else:
+                            st.error("Please fill in all fields.")   
+
+        else: 
             st.error(doctor_info["error"])
 
 def diabetes_prediction_page():
@@ -558,6 +595,15 @@ def diabetes_result_page():
         st.error("The person is likely to have diabetes.")
         components.html(result_image1,height=500)
         components.html(hover+result_if_page1,height=650)
+        formbtn = st.button("Make Appointment")
+
+        if "formbtn_state" not in st.session_state:
+            st.session_state.formbtn_state = False
+
+        if formbtn or st.session_state.formbtn_state:
+            st.session_state.formbtn_state = True
+            form_function("Diabetes")
+            st.session_state.formbtn_state = False  
     else:
         st.success("The person is not likely to have diabetes.")
         components.html(no_disease_image, height=400)
@@ -573,6 +619,15 @@ def heart_result_page():
         st.error("The person is likely to have heart disease.")
         components.html(result_page_image2,height=470)
         components.html(hover+heart_result_if,height=650)
+        formbtn = st.button("Make Appointment")
+
+        if "formbtn_state" not in st.session_state:
+            st.session_state.formbtn_state = False
+
+        if formbtn or st.session_state.formbtn_state:
+            st.session_state.formbtn_state = True
+            form_function("Heart disease")
+            st.session_state.formbtn_state = False 
     else:
         st.success("The person is not likely to have heart disease.")
         components.html(no_disease_image,height=400)
@@ -588,6 +643,14 @@ def framingham_result_page():
         st.error("The person is likely to have Cardiovascular Disease.")
         components.html(cardio_page_image,height=470)
         components.html(hover+cardio_page_if,height=670)
+        
+        if "formbtn_state" not in st.session_state:
+            st.session_state.formbtn_state = False
+
+        if formbtn or st.session_state.formbtn_state:
+            st.session_state.formbtn_state = True
+            form_function("Heart disease")
+            st.session_state.formbtn_state = False 
     else:
         st.success("The person is not likely to have Cardiovascular Disease.")
         
