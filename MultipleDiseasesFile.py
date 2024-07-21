@@ -25,7 +25,8 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
 
-
+# Load environment variables from .env file
+load_dotenv()
 
 
 # Set page configuration
