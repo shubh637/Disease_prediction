@@ -1,4 +1,4 @@
-#Why It’s a Good Choice:
+# Why It’s a Good Choice:
 
 #Relevance and Impact: Health care and medical diagnosis are critical areas where technology can make a significant difference. A disease prediction system can potentially help in early diagnosis and better patient management.
 
@@ -10,7 +10,7 @@
 
 #Interdisciplinary Learning: It involves combining knowledge from computer science, data science, and health care, which can be beneficial for understanding interdisciplinary applications.
 
-#Components to Include:
+# Components to Include:
 #Data Collection: Gather data from reliable sources such as medical databases or research datasets. This might include patient records, diagnostic images, or lab results.
 
 #Data Preprocessing: Handle missing values, normalize data, and perform feature engineering. For images, you may need to resize, augment, or preprocess them.
@@ -25,7 +25,7 @@
 
 #Ethical Considerations: Address any ethical concerns related to handling medical data and making predictions that might impact patient health.
 
-#Additional Considerations:
+# Additional Considerations:
 #Collaborate with Experts: If possible, collaborate with medical professionals to ensure the clinical relevance of your system.
 #Stay Updated: Follow the latest research and advancements in ML and DL applied to healthcare to incorporate state-of-the-art techniques.
 #Security and Privacy: Ensure that your system complies with data protection regulations and handles sensitive information securely.
