@@ -47,6 +47,7 @@ Ensure that your system complies with data protection regulations and handles se
 
 # Overall, this project can be a comprehensive and impactful choice, showcasing your skills in ML, DL, and their application to real-world problems.
 
+![Alt Text](https://github.com/yourusername/yourrepository/raw/main/path/to/your/image.png)
 
 
 
