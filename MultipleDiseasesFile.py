@@ -451,7 +451,7 @@ def form_function(disease):
                             email_subject = "Appointment Confirmation"
                             email_message = f"Dear {name},\n\nYour appointment with Dr. {doctor_info['Doctor Name']} has been scheduled for {date} at {time}.\n\nThank you."
 
-                            # send_email(email, email_subject, email_message)
+                            send_email(email, email_subject, email_message)
                             delay.sleep(3)
                             st.session_state.formbtn_state = False                           
                             st.rerun()
