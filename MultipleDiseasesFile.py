@@ -439,9 +439,9 @@ def form_function(disease):
 
                 if not name:
                     st.error("Please enter your name.")
-                elif not contact or not re.match(contact_regex, contact) :
+                elif  not contact or not re.match(contact_regex, contact) :
                     st.error("Please enter a valid 10-digit contact number.")
-                elif not email or not re.match(email_regex, email):
+                elif not email or not re.match(email_regex, email) :
                     st.error("Please enter a valid email address.")
                 else:
                     # Save and send email
@@ -469,6 +469,7 @@ def form_function(disease):
                     st.rerun()
     else:
         st.error(doctor_info["error"])
+
 
 def diabetes_prediction_page():
     components.html(second_page_image,height=600)
