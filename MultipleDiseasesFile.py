@@ -439,9 +439,9 @@ def form_function(disease):
 
                 if not name:
                     st.error("Please enter your name.")
-                elif not re.match(contact_regex, contact) or not contact:
+                elif not contact or not re.match(contact_regex, contact) :
                     st.error("Please enter a valid 10-digit contact number.")
-                elif not re.match(email_regex, email) or not email:
+                elif not email or not re.match(email_regex, email):
                     st.error("Please enter a valid email address.")
                 else:
                     # Save and send email
