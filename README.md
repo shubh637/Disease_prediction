@@ -5,8 +5,6 @@
 ![heart disease](https://github.com/shubh637/Disease_prediction/blob/main/website%20example%20images/Screenshot%202024-07-29%20164639.png)
 ![other](https://github.com/shubh637/Disease_prediction/blob/main/website%20example%20images/Screenshot%202024-07-29%20164922.png)
 
-## Download File
-[Click here to download](https://drive.google.com/file/d/1O1oiCOed8bozHQLYKVDMtVLDatEAziPR/view?usp=drivesdk)
 
 # Why It’s a Good Choice:
 
